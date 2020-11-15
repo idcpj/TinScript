@@ -1,0 +1,21 @@
+{
+  "name": "tinscript",
+  "version": "1.0.0",
+  "description": "create a Language that name is tinscript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "js"
+  ],
+  "author": "idcpj",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  },
+  "dependencies": {
+    "linkedlist": "^1.0.1"
+  }
+}

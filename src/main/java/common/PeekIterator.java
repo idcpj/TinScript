@@ -13,10 +13,12 @@ public class PeekIterator<T> implements Iterator<T> {
     private T _endToken;
 
 
-//    public PeekIterator(Stream<T> stream) {
+    public PeekIterator(Stream<T> stream) {
+        it = stream.iterator();
+    }
     public PeekIterator(Stream<T> stream, T endToKen) {
         it = stream.iterator();
-//        _endToken = endToKen;
+        _endToken = endToKen;
 
     }
 
