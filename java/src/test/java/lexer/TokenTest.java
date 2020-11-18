@@ -23,7 +23,7 @@ public class TokenTest {
         it1.next();
 
         Token token3 = Token.makeVarOrKeyWord(it1);
-        assertToken(token3, ToKenType.VARIABLE,"abc");
+        assertToken(token3, ToKenType.VARIABLE, "abc");
 
     }
 
@@ -32,4 +32,24 @@ public class TokenTest {
         assertEquals(s, token1.getValue());
     }
 
+    @Test
+    public void test_makeString() {
+        String[] tests = {
+                "\"abc\"",
+                "\'abc\'",
+                "\"\"",
+                "\'\'",
+        };
+        try {
+
+            for (String test : tests) {
+                PeekIterator<Character> it1 = new PeekIterator<>(test.chars().mapToObj(c -> (char) c));
+                Token token = Token.makeString(it1);
+                assertToken(token,ToKenType.STRING,test);
+            }
+
+        } catch (LexicalException e) {
+            e.printStackTrace();
+        }
+    }
 }

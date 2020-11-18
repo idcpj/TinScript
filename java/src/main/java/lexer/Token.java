@@ -72,4 +72,41 @@ public class Token {
     }
 
 
+    public static Token makeString(PeekIterator<Character> it) throws LexicalException {
+        StringBuilder s= new StringBuilder();
+        int state = 0;
+
+        while(it.hasNext()){
+            char c = it.next();
+
+            switch(state){
+                case 0:
+                    if (c=='\''){
+                        state=1;
+                    }else if (c=='\"'){
+                        state=2;
+                    }
+                    s.append(c);
+                    break;
+                case 1:
+                    if (c=='\''){
+                        return new Token(ToKenType.STRING,s.toString()+c);
+                    }else{
+                        s.append(c);
+                    }
+                    break;
+                case 2:
+                    if (c=='\"'){
+                        return new Token(ToKenType.STRING,s.toString()+c);
+                    }else{
+                        s.append(c);
+                    }
+                    break;
+            }
+        } // end while
+
+        // 不可能到这里,但是为了 java的规范,添加一句
+        throw new LexicalException("Unexpected error");
+    }
+
 }
