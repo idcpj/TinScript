@@ -2,6 +2,10 @@ package lexer;
 
 import common.PeekIterator;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 public class TokenTest {
@@ -77,5 +81,31 @@ public class TokenTest {
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void test_makeNumber() {
+        String[] tests={
+                "+0 aa",
+                "-0 aa",
+                ".3 ccc",
+                ".555 ddd",
+                "7789.8888 ddd",
+                "-1000.123123*123123",
+        };
+        try {
+            for (String test : tests) {
+                PeekIterator<Character> it = new PeekIterator<>(test.chars().mapToObj(c -> (char) c));
+                Token token = Token.makeNumber(it);
+
+                String[] split = test.split("[* ]+");
+                String result = split[0];
+
+                assertToken(token, result.contains(".") ? TokenType.FLOAT : TokenType.INTEGER, result);
+            }
+        } catch (LexicalException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

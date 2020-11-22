@@ -36,6 +36,9 @@ public class Token {
     }
 
     /**
+     * char 串如果匹配关键字,则为关键词
+     *        如果为true或 false,则为boolean 值
+     *        其他则为变量
      * @param it
      * @return
      */
@@ -68,6 +71,12 @@ public class Token {
     }
 
 
+    /**
+     * char 串中匹配 '...' or "..." 则是字符串
+     * @param it
+     * @return
+     * @throws LexicalException
+     */
     public static Token makeString(PeekIterator<Character> it) throws LexicalException {
         StringBuilder s = new StringBuilder();
         int state = 0;
@@ -262,6 +271,89 @@ public class Token {
         }
 
         throw new LexicalException("Unexpected error");
+    }
+
+    public static Token makeNumber(PeekIterator<Character> it )throws LexicalException{
+        StringBuilder s= new StringBuilder();
+        int state =0;
+
+        while(it.hasNext()){
+            char  lookahead = it.next();
+            switch (state){
+                case 0:
+                    if (lookahead=='0'){
+                        state=1;
+                    }else if(AlphabetHelper.isNumber(lookahead)){
+                        state=2;
+                    }else if(lookahead=='+' || lookahead=='-' ){
+                        state=3;
+                    }else if(lookahead=='.' ){
+                        state=5;
+                    }
+                    break;
+                case 1:
+                    if (lookahead =='0'){
+                        state=1;
+                    }else if (AlphabetHelper.isNumber(lookahead)){
+                        state=2;
+                    }else if(lookahead=='.'){
+                        state=4;
+                    }else{
+                        return new Token(TokenType.INTEGER, s.toString());
+                    }
+                    break;
+                case 2:
+                    if (AlphabetHelper.isNumber(lookahead)){
+                        state=2;
+                    }else if (lookahead=='.'){
+                        state=4;
+                    }else{
+                        return new Token(TokenType.INTEGER, s.toString());
+                    }
+                    break;
+                case 3:
+                    if (AlphabetHelper.isNumber(lookahead)){
+                        state=2;
+                    }else if(lookahead=='.'){
+                        state=5;
+                    }else {
+                        throw new LexicalException(lookahead);
+                    }
+                    break;
+                case 4:
+                    if (lookahead=='.'){
+                        throw new LexicalException(lookahead);
+                    }else if (AlphabetHelper.isNumber(lookahead)){
+                        state=20;
+                    }else{
+                        return new Token(TokenType.FLOAT, s.toString());
+                    }
+                    break;
+                case 5:
+                    if (AlphabetHelper.isNumber(lookahead)){
+                        state=20;
+                    }else{
+                        throw new LexicalException(lookahead);
+                    }
+                    break;
+
+                case 20:
+                    if (AlphabetHelper.isNumber(lookahead)){
+                        state=20;
+                    }else if (lookahead=='.'){
+                        throw new LexicalException(lookahead);
+                    }else {
+                        return new Token(TokenType.FLOAT, s.toString());
+                    }
+
+            } // end switch
+
+            s.append(lookahead);
+
+        }// end while
+
+        throw new LexicalException("Unexpected err ");
+
     }
 
 }

@@ -4,6 +4,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
+/**
+ * 把字符串变为可迭代
+ * @param <T>
+ */
 public class PeekIterator<T> implements Iterator<T> {
 
     private static final int CACHE_SIZE = 10;
