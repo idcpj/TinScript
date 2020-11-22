@@ -30,7 +30,8 @@ public class TokenTest {
 
     private void assertToken(Token token1, TokenType keyword, String s) {
         assertEquals(keyword, token1.getType());
-        assertEquals(s, token1.getValue());
+        String value = token1.getValue();
+        assertEquals(s, value);
     }
 
     @Test

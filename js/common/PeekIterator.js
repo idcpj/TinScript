@@ -9,6 +9,7 @@ class PeekIterator {
     // 基于时间差UN个Ian的缓存
     queueCache;
     enToken;
+
     constructor(it,endToken=null) {
         this.it=it
         this.stackPutBacks = new LinkedList()
