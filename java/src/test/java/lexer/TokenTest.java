@@ -87,6 +87,7 @@ public class TokenTest {
     @Test
     public void test_makeNumber() {
         String[] tests={
+                "-2",
                 "+0 aa",
                 "-0 aa",
                 ".3 ccc",
@@ -96,7 +97,7 @@ public class TokenTest {
         };
         try {
             for (String test : tests) {
-                PeekIterator<Character> it = new PeekIterator<>(test.chars().mapToObj(c -> (char) c));
+                PeekIterator<Character> it = new PeekIterator<>(test.chars().mapToObj(c -> (char) c),(char)0);
                 Token token = Token.makeNumber(it);
 
                 String[] split = test.split("[* ]+");

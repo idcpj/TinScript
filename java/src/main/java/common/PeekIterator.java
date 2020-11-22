@@ -20,6 +20,12 @@ public class PeekIterator<T> implements Iterator<T> {
     public PeekIterator(Stream<T> stream) {
         it = stream.iterator();
     }
+
+    /**
+     *  由于判断总是有需要 next,所以用主动给每个 line 添加 0,可通过判断 char(0)来提示是否叨叨重点
+     * @param stream
+     * @param endToKen
+     */
     public PeekIterator(Stream<T> stream, T endToKen) {
         it = stream.iterator();
         _endToken = endToKen;

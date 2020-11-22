@@ -6,7 +6,6 @@ import common.PeekIterator;
 public class Token {
     TokenType _type;
     String _value;
-    private long value;
 
     public Token(TokenType type, String value) {
         _type = type;
@@ -183,7 +182,7 @@ public class Token {
                         return new Token(TokenType.OPERATOR,"-=");
                     }else{
                         it.putBack();
-                        return new Token(TokenType.OPERATOR,"+");
+                        return new Token(TokenType.OPERATOR,"-");
                     }
                 case 3:
                     if (lookahead == '='){
@@ -217,7 +216,7 @@ public class Token {
                         return new Token(TokenType.OPERATOR,"<<");
                     }else{
                         it.putBack();
-                        return new Token(TokenType.OPERATOR,">");
+                        return new Token(TokenType.OPERATOR,"<");
                     }
                 case 7:
                     if ( lookahead == '='){
@@ -278,7 +277,7 @@ public class Token {
         int state =0;
 
         while(it.hasNext()){
-            char  lookahead = it.next();
+            char  lookahead = it.peek();
             switch (state){
                 case 0:
                     if (lookahead=='0'){
@@ -347,7 +346,7 @@ public class Token {
                     }
 
             } // end switch
-
+            it.next();
             s.append(lookahead);
 
         }// end while
@@ -356,4 +355,11 @@ public class Token {
 
     }
 
+    public boolean isNumber() {
+        return _type==TokenType.INTEGER||_type==TokenType.FLOAT;
+    }
+
+    public boolean isOperator() {
+        return _type==TokenType.OPERATOR;
+    }
 }
