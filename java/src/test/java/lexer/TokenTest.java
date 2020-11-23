@@ -87,6 +87,7 @@ public class TokenTest {
     @Test
     public void test_makeNumber() {
         String[] tests={
+                "2",
                 "-2",
                 "+0 aa",
                 "-0 aa",

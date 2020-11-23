@@ -27,6 +27,10 @@ class Token {
             this._type === TokenType.STRING ||
             this._type === TokenType.BOOLEAN;
     }
+    isValue(){
+        return this._type === TokenType.INTEGER ||
+            this._type === TokenType.FLOAT
+    }
 
     toString() {
         return `type ${this._type},value ${this._value}`
@@ -324,6 +328,7 @@ class Token {
             s += lookahead;
             it.next();
         } // end while
+
         throw new LexicalException("Unexpected error");
     }
 

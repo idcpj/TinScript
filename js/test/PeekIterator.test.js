@@ -24,17 +24,21 @@ describe('test PeekIterator',()=>{
         assert.equal(iter.next(),'c')
         iter.putBack()
         iter.putBack()
+        assert.equal(iter.peek(),'b')
+        assert.equal(iter.peek(),'b')
         assert.equal(iter.next(),'b')
         assert.equal(iter.next(),'c')
     });
 
     it('test_endToken',  ()=> {
-        const iter = new PeekIterator(arrayToGenerator([..."abcdefg"]),'\0')
-        for (let i = 0; i < 8; i++) {
+        let source = "abcdefg";
+        const iter = new PeekIterator(arrayToGenerator([...source]))
+
+        for (let i = 0; i < source.length+100; i++) {
             if (i===7){
                 assert.equal(iter.next(),'\0')
             }else{
-                assert.equal(iter.next(),"abcdefg"[i])
+                assert.equal(iter.next(),source[i])
             }
         }
     });

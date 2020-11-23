@@ -1,4 +1,4 @@
-package common;
+package lexer;
 
 import java.util.regex.Pattern;
 

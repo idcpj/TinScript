@@ -1,6 +1,5 @@
 package lexer;
 
-import common.AlphabetHelper;
 import common.PeekIterator;
 
 import java.util.ArrayList;
