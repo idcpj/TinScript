@@ -71,6 +71,14 @@ describe("lexer",()=>{
         let lexer = new Lexer();
         let token = lexer.analyseString(source);
         assert.equal(token.length,8);
+        assertToken(token[0],'1',TokenType.INTEGER);
+        assertToken(token[1],'+',TokenType.OPERATOR);
+        assertToken(token[2],'1',TokenType.INTEGER);
+        assertToken(token[3],'=',TokenType.OPERATOR);
+        assertToken(token[4],'2',TokenType.INTEGER);
+        assertToken(token[5],'1',TokenType.INTEGER);
+        assertToken(token[6],'+',TokenType.OPERATOR);
+        assertToken(token[7],'2',TokenType.INTEGER);
 
     });
 
