@@ -9,7 +9,7 @@ const arrayToGenerator = require("../common/arrayToGenerator")
  */
 class Lexer{
     analyseString(source){
-        let it = new PeekIterator(arrayToGenerator([...source]));
+        let it = new PeekIterator(arrayToGenerator([...source]),'\0');
         return this.analyse(it);
     }
 

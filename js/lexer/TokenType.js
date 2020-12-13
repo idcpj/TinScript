@@ -1,7 +1,5 @@
 const Enum = require("../common/Enum")
 
-
-
 module.exports={
     KEYWORD:new Enum("KEYWORD",1),
     VARIABLE:new Enum("VARIABLE",1),
@@ -11,4 +9,5 @@ module.exports={
     FLOAT:new Enum("FLOAT",1),
     BOOLEAN:new Enum("BOOLEAN",1),
     STRING:new Enum("STRING",1),
+    SCALAR:new Enum("SCALAR",1)
 }

@@ -36,7 +36,7 @@ describe('test PeekIterator',()=>{
 
         for (let i = 0; i < source.length+100; i++) {
             if (i===7){
-                assert.equal(iter.next(),'\0')
+                assert.equal(iter.next(),null)
             }else{
                 assert.equal(iter.next(),source[i])
             }

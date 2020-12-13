@@ -85,7 +85,7 @@ describe('Token', ()=> {
 
         for (const test of tests) {
             const [input,expected]=test
-            let it = new PeekIterator(arrayToGenerator([...input]));
+            let it = new PeekIterator(arrayToGenerator([...input]),'\0');
             let token = Token.makeNumber(it);
 
             let tokenType = token.getValue().indexOf(".")===-1?TokenType.INTEGER: TokenType.FLOAT;

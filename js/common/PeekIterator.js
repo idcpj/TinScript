@@ -4,7 +4,7 @@ class PeekIterator {
 
      CACHE_SIZE = 10
 
-    constructor(it, endToken = '\0'){
+    constructor(it, endToken = null){
         this.it = it
         // 需要putBack的元素
         this.stackPutBacks = new LinkedList()
