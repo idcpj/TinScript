@@ -28,12 +28,16 @@ public class SimpleParser {
             return scalar;
         }
 
+        // 根节点
         expr.setLexeme(it.peek());
-        it.nextMatch("+");
+        it.nextMatch("+");// 判断下一个节点是否为 "+",不是则抛异常
         expr.setLabel("+");
+
+        // 左节点
         expr.addChild(scalar);
         expr.setType(ASTNodeTypes.BINARY_EXPR);
 
+        // 节点
         ASTNode rightNode = parse(it);
         expr.addChild(rightNode);
 
