@@ -1,7 +1,7 @@
-package parser;
+package parser.ast;
 
 
-enum  ASTNodeTypes{
+public enum  ASTNodeTypes{
     BLOCK,
     BINARY_EXPR, // 1+1
     UNARY_EXPR, // ++i

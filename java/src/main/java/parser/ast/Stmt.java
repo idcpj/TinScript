@@ -1,4 +1,5 @@
-package parser;
+package parser.ast;
+
 
 /**
  * 语句

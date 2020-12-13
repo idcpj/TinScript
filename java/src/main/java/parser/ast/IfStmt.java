@@ -1,4 +1,6 @@
-package parser;
+package parser.ast;
+
+
 
 public class IfStmt  extends Stmt {
 
