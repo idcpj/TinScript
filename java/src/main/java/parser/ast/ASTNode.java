@@ -61,4 +61,8 @@ public abstract class ASTNode {
     }
 
 
+    public  ASTNodeTypes getType(){
+        return type;
+    }
+
 }

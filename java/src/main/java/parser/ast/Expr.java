@@ -6,6 +6,8 @@ import parser.utils.ParseException;
 import parser.utils.PeekTokenIterator;
 import parser.utils.PriorityTable;
 
+import java.util.function.UnaryOperator;
+
 // 表达式
 public class Expr extends  ASTNode {
 
@@ -22,6 +24,9 @@ public class Expr extends  ASTNode {
         this.label=lexeme.getValue();
 
     }
+    public static ASTNode parse(PeekTokenIterator it) throws ParseException {
+        return E(null,0,it);
+    }
 
     // 左递归 E(k) -> E(k) op(k) E(k+1) |E(k+1)
     // 转为有右递归:
@@ -37,9 +42,9 @@ public class Expr extends  ASTNode {
         }else{
             return race(
                     it,
-                    ()->combine(parent,it,()->U(parent,it),()->E_(parent,k,it)),
-                    ()->combine(parent,it,()->F(parent,it),()->E_(parent,k,it))
-            );
+                    ()->combine(parent,it,()->U(parent,it),()->E_(parent,k,it),"1"),
+                    ()->combine(parent,it,()->F(parent,it),()->E_(parent,k,it),"2")
+                    );
         }
 
     }
@@ -56,18 +61,18 @@ public class Expr extends  ASTNode {
     private static ASTNode U(ASTNode parent, PeekTokenIterator it) throws ParseException {
         Token token  = it.peek();
         String value = token.getValue();
-        ASTNode expr;
 
         if (value.equals("(")){
             it.nextMatch("(");
-            expr = E(parent,0,it);
+            ASTNode expr = E(parent,0,it);
             it.nextMatch(")");
             return expr;
         } else if (value.equals("++") || value.equals("--") || value.equals("!")){
             Token t = it.peek();
-            it.nextMatch("value");
+            it.nextMatch(value);
             Expr unaryExpr = new Expr(parent,ASTNodeTypes.UNARY_EXPR,t);
-            unaryExpr.addChild(E(unaryExpr,0,it));
+            unaryExpr.addChild(E(parent,0,it));
+            return unaryExpr;
         }
         return null;
     }
@@ -84,6 +89,7 @@ public class Expr extends  ASTNode {
                     ()-> E(parent,k+1,it),
                     ()-> E_(parent,k,it))
             );
+            return expr;
 
         }
         return null;
@@ -95,7 +101,7 @@ public class Expr extends  ASTNode {
         if (a==null){
             return it.hasNext()?bFunc.hoc():null;
         }
-        ASTNode b = it.hasNext()?aFunc.hoc():null;
+        ASTNode b = it.hasNext()?bFunc.hoc():null;
         if (b==null){
             return a;
         }
@@ -103,6 +109,27 @@ public class Expr extends  ASTNode {
         expr.addChild(a);
         expr.addChild(b.getChild(0));
 
+        return expr;
+
+    }
+    // 高级函数用于延迟加载
+    private static ASTNode combine(ASTNode parent,PeekTokenIterator it,ExprHOF aFunc, ExprHOF bFunc,String debug ) throws ParseException {
+        if (debug.equals("1")){
+            System.out.println("debug...");
+        } else if (debug.equals("2")){
+            System.out.println("debug...");
+        }
+        ASTNode a = aFunc.hoc();
+        if (a==null){
+            return it.hasNext()?bFunc.hoc():null;
+        }
+        ASTNode b = it.hasNext()?bFunc.hoc():null;
+        if (b==null){
+            return a;
+        }
+        Expr expr =new Expr(parent,ASTNodeTypes.BINARY_EXPR,b.lexeme);
+        expr.addChild(a);
+        expr.addChild(b.getChild(0));
 
         return expr;
 
