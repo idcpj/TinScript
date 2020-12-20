@@ -28,6 +28,9 @@ public class Expr extends  ASTNode {
         return E(null,0,it);
     }
 
+    public static ASTNode parse(ASTNode parent, PeekTokenIterator it) throws ParseException {
+        return E(parent,0,it);
+    }
     // 左递归 E(k) -> E(k) op(k) E(k+1) |E(k+1)
     // 转为有右递归:
     //  E(k) -> E(k+1) E_(k) // var e =new Expr(); e.left = E(k+1);e.op=op(k);e.right=E(k+1)E_(k)
@@ -124,4 +127,5 @@ public class Expr extends  ASTNode {
         return bFunc.hoc();
 
     }
+
 }
