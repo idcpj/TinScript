@@ -1,6 +1,5 @@
 const Enum  =require("../../common/Enum")
 
-
 module.exports={
     BLOCK:new Enum("BLOCK",1),
     BINARY_EXPR:new Enum("BINARY_EXPR",1),

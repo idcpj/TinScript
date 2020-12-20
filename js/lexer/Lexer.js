@@ -8,11 +8,21 @@ const arrayToGenerator = require("../common/arrayToGenerator")
  * 迭代器
  */
 class Lexer{
+
+    /**
+     * @param source
+     * @returns Array
+     */
     analyseString(source){
         let it = new PeekIterator(arrayToGenerator([...source]),'\0');
         return this.analyse(it);
     }
 
+    /**
+     *
+     * @param it
+     * @returns Array
+     */
     analyse(it){
         const tokens = [];
         while (it.hasNext()){

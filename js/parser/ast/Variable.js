@@ -1,5 +1,4 @@
-const ASTNode =require("ASTNode")
-const ASTNodeTypes =require("ASTNodeTypes")
+const ASTNode =require("./ASTNode")
 
 class Variable extends ASTNode{
     constructor(parent,it) {
