@@ -42,8 +42,8 @@ public class Expr extends  ASTNode {
         }else{
             return race(
                     it,
-                    ()->combine(parent,it,()->U(parent,it),()->E_(parent,k,it),"1"),
-                    ()->combine(parent,it,()->F(parent,it),()->E_(parent,k,it),"2")
+                    ()->combine(parent,it,()->U(parent,it),()->E_(parent,k,it)),
+                    ()->combine(parent,it,()->F(parent,it),()->E_(parent,k,it))
                     );
         }
 
@@ -97,28 +97,6 @@ public class Expr extends  ASTNode {
 
     // 高级函数用于延迟加载
     private static ASTNode combine(ASTNode parent,PeekTokenIterator it,ExprHOF aFunc, ExprHOF bFunc) throws ParseException {
-        ASTNode a = aFunc.hoc();
-        if (a==null){
-            return it.hasNext()?bFunc.hoc():null;
-        }
-        ASTNode b = it.hasNext()?bFunc.hoc():null;
-        if (b==null){
-            return a;
-        }
-        Expr expr =new Expr(parent,ASTNodeTypes.BINARY_EXPR,b.lexeme);
-        expr.addChild(a);
-        expr.addChild(b.getChild(0));
-
-        return expr;
-
-    }
-    // 高级函数用于延迟加载
-    private static ASTNode combine(ASTNode parent,PeekTokenIterator it,ExprHOF aFunc, ExprHOF bFunc,String debug ) throws ParseException {
-        if (debug.equals("1")){
-            System.out.println("debug...");
-        } else if (debug.equals("2")){
-            System.out.println("debug...");
-        }
         ASTNode a = aFunc.hoc();
         if (a==null){
             return it.hasNext()?bFunc.hoc():null;
